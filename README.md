@@ -6,9 +6,9 @@ This project is a test of Haskell web environment, using Warp and Groundhog.
 
 You need a PostgreSQL database running with the following:
 
-Database: **db**
-User: **postgre**
-Paswword: **postgre**
+- Database: **db**
+- User: **postgre**
+- Paswword: **postgre**
 
 ...or you can just modify the `pgConnectionString` defined in the `app/Main.hs` file.
 
