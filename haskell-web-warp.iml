@@ -116,5 +116,6 @@
     <orderEntry type="library" name="mono-traversable-1.0.15.3" level="project" />
     <orderEntry type="library" name="split-0.2.3.4" level="project" />
     <orderEntry type="library" name="vector-algorithms-0.8.0.4" level="project" />
+    <orderEntry type="library" name="convertible-1.1.1.1" level="project" />
   </component>
 </module>

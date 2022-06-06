@@ -6,19 +6,18 @@ module Lib
 where
 
 import Network.HTTP.Types (status404)
-import Network.Wai (Application, Request, Response, pathInfo, responseBuilder, ResponseReceived)
+import Network.Wai (Request, Response, pathInfo, responseBuilder, ResponseReceived)
 import Network.Wai.Handler.Warp (run)
 import Users (usersRouter)
 import Data.Binary.Builder (empty)
-import Database.Groundhog.Postgresql (PersistBackend (..))
-import Database.Groundhog.Core (runDb')
+import Database.Groundhog.Postgresql (Postgresql)
 
-runAppOnPort :: Int -> IO ()
-runAppOnPort port = run port application 
+runAppOnPort :: Int -> Postgresql -> IO ()
+runAppOnPort port db = run port (application db)
 
-application :: Request -> (Response -> IO ResponseReceived) -> IO ResponseReceived
-application request respond = router request >>= respond
+application :: Postgresql -> Request -> (Response -> IO ResponseReceived) -> IO ResponseReceived
+application db request respond = router db request >>= respond
 
-router ::  PersistBackend m => Request -> m Response
-router req | pathInfo req == ["users"] = usersRouter req
-router _                               = return $ responseBuilder status404 [] empty
+router ::  Postgresql -> Request -> IO Response
+router db req | pathInfo req == ["users"] = usersRouter db req
+router _ _                                = return $ responseBuilder status404 [] empty
