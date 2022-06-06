@@ -9,7 +9,10 @@ main :: IO ()
 main = withPostgresqlConn pgConnectionString start
 
 start :: Postgresql -> IO ()
-start db = runDbConn runMigrations db >> putStrLn ("Listening on " ++ show port ++ ".") >> runAppOnPort port db
+start db = do 
+  runDbConn runMigrations db
+  putStrLn ("Listening on " ++ show port ++ ".") 
+  runAppOnPort port db
 
 runMigrations :: PersistBackend m => m ()
 --runMigrations =  mapM_ (createMigration >=> executeMigration)  [migrate (undefined :: Tree)]

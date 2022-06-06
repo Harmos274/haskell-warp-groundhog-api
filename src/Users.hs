@@ -5,15 +5,15 @@ module Users
   )
   where
 
-import Network.Wai (Response, Request, responseBuilder, requestMethod, consumeRequestBodyStrict)
-import Network.HTTP.Types.Status (ok200, notFound404, created201, badRequest400)
-import Data.Binary.Builder (empty)
 import GHC.Generics (Generic)
+import Data.Functor ((<&>))
+import Data.Binary.Builder (empty)
 import Data.Aeson (ToJSON, FromJSON, decode)
 import Data.Convertible.Base (Convertible (..), convert)
 import Database.Groundhog.Postgresql (select, Cond (CondEmpty), Postgresql)
-import Data.Functor ((<&>))
 import Database.Groundhog.Core (runDbConn)
+import Network.Wai (Response, Request, responseBuilder, requestMethod, consumeRequestBodyStrict)
+import Network.HTTP.Types.Status (ok200, notFound404, created201, badRequest400)
 
 import DB.Users (Users (..))
 import Core (jsonResponse, jsonErrorResponse, Cause (..))
