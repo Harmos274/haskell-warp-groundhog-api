@@ -3,12 +3,13 @@
 module Core
   ( jsonResponse,
     jsonErrorResponse,
+    json404NotFound,
     Cause (..),
     APIError (..),
   ) where
 
 import Network.Wai (Response, responseLBS)
-import Network.HTTP.Types (Status (..))
+import Network.HTTP.Types (Status (..), notFound404)
 import GHC.Generics (Generic)
 import Data.Aeson (encode, ToJSON, FromJSON)
 
@@ -23,4 +24,7 @@ jsonResponse :: ToJSON a => Status -> a -> Response
 jsonResponse status = responseLBS status [("Content-Type", "application/json")] . encode
 
 jsonErrorResponse :: Status -> Cause -> Response
-jsonErrorResponse status@Status { statusCode } (Cause cause) = responseLBS status [("Content-Type", "application/json")] . encode $ APIError (show statusCode) cause
+jsonErrorResponse status@Status { statusCode } (Cause cause) = jsonResponse status $ APIError (show statusCode) cause
+
+json404NotFound :: Response
+json404NotFound = jsonErrorResponse notFound404 (Cause "Resource not found.")
