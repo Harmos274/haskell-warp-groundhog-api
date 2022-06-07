@@ -1,6 +1,6 @@
 module Main where
 
-import DB.Users (Users (..), Tree (..))
+import DB.Users (Users (..))
 import Database.Groundhog.Postgresql (Postgresql, withPostgresqlConn, runMigration, migrate)
 import Lib (runAppOnPort)
 import Database.Groundhog.Core (PersistBackend, runDbConn)
@@ -18,8 +18,7 @@ runMigrations :: PersistBackend m => m ()
 --runMigrations =  mapM_ (createMigration >=> executeMigration)  [migrate (undefined :: Tree)]
 runMigrations = runMigration $ foldl (>>) (return ())
   [
-    migrate (undefined :: Users),
-    migrate (undefined :: Tree)
+    migrate (undefined :: Users)
   ]
 
 pgConnectionString :: String
