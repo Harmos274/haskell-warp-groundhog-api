@@ -14,8 +14,8 @@ import Database.Groundhog.Core (runDbConn)
 import Network.Wai (Response, Request, requestMethod, consumeRequestBodyStrict)
 import Network.HTTP.Types.Status (ok200, created201, badRequest400)
 
-import DB.Users (Uimport Core (jsonResponse, jsonErrorResponse, json404NotFound, Cause (..))
-sers (..), getAllUsers, insertUser)
+import Core (jsonResponse, jsonErrorResponse, json404NotFound, Cause (..))
+import DB.Users (Users (..), getAllUsers, insertUser)
 
 data User = User { name :: String, phone :: String } deriving (Generic, Show)
 
